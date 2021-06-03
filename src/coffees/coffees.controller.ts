@@ -1,5 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, Res } from '@nestjs/common';
 import { CoffeesService } from './coffees.service'
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
+import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 
 // string passed to the @Controller is the string of the route it will be handling i.e. /coffees
 @Controller('coffees')
@@ -26,24 +28,29 @@ export class CoffeesController {
   // }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  // findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
+    console.log(typeof id)
+    // return this.coffeesService.findOne(id)
+    return this.coffeesService.findOne('' + id)
     // return `This action returns #${id} coffee`
-    return this.coffeesService.findOne(id)
   }
 
   @Post()
-  @HttpCode(HttpStatus.GONE)
-  create(@Body() body) {
+  // can use status codes to show a route is gone/depricated
+  // @HttpCode(HttpStatus.GONE)
+  create(@Body() createCoffeeDto: CreateCoffeeDto) {
+    console.log(createCoffeeDto instanceof CreateCoffeeDto)
     // create(@Body('name') body) { -- this accessses only one param on the body and does not validate any other params. Not great to use. Cannot return body.name, so if you do have to have it, you can pass 'string' to get param
-    return this.coffeesService.create(body)
+    return this.coffeesService.create(createCoffeeDto)
     // return body
     // this action creates a coffee
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body) {
+  update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
     // passing in param and body: passing in param of item to update and the payload that we are updating with
-    return this.coffeesService.update(id, body)
+    return this.coffeesService.update(id, updateCoffeeDto)
     // return `This action updates #${id} coffee`
   }
 
