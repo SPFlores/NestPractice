@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 // using --dry-run flag on any command will show you what will happen (file structure) if the command is run but won't actually run it
 
 @Module({
@@ -15,7 +16,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
     database: 'postgres', // name of our database,
     autoLoadEntities: true, // models will be loaded automatically
     synchronize: true, // your entities will be synced with the database(always disable in prod)
-  })],
+  }), CoffeeRatingModule],
   // controllers: handle requests in the app
   controllers: [AppController],
   // providers can inject dependencies
