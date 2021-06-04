@@ -11,7 +11,10 @@ async function bootstrap() {
     // will respond with an error if something not wanted is listed on the req.body
     forbidNonWhitelisted: true,
     // when a req is sent, the body is not instantly changed to an instance of teh Dto. To do so, set transform: true. Also does primitive type conversions. May slightly impact performance
-    transform: true
+    transform: true,
+    transformOptions: {
+      enableImplicitConversion: true
+    }
   }))
   await app.listen(3000);
 }

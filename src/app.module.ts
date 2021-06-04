@@ -2,13 +2,24 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
+import { TypeOrmModule } from '@nestjs/typeorm'
 // using --dry-run flag on any command will show you what will happen (file structure) if the command is run but won't actually run it
 
 @Module({
-  imports: [CoffeesModule],
+  imports: [CoffeesModule, TypeOrmModule.forRoot({
+    type: 'postgres', // type of our database
+    host: 'localhost', // database host
+    port: 5432, // database host
+    username: 'postgres', // username
+    password: 'pass123', // user password
+    database: 'postgres', // name of our database,
+    autoLoadEntities: true, // models will be loaded automatically
+    synchronize: true, // your entities will be synced with the database(always disable in prod)
+  })],
   // controllers: handle requests in the app
   controllers: [AppController],
   // providers can inject dependencies
   providers: [AppService],
 })
-export class AppModule {}
+
+export class AppModule { }
